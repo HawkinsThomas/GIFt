@@ -10,4 +10,13 @@ main{
 #results{
     height: 60%;
     overflow: scroll;
+    
+}
+.col-md-3{
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+img{
+    width:100%;
 }

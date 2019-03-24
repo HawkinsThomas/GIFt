@@ -1,0 +1,13 @@
+html{
+    height:100%;
+}
+body{
+    height:90%;
+}
+main{
+    height: 100%;
+}
+#results{
+    height: 60%;
+    overflow: scroll;
+}

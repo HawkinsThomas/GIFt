@@ -9,14 +9,12 @@ main{
 }
 #results{
     height: 60%;
-    overflow: scroll;
-    
+    overflow: scroll;   
 }
-.col-md-3{
+.result-column{
     padding-right: 2px;
     padding-left: 2px;
 }
-
 img{
     width:100%;
 }

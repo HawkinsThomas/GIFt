@@ -9,7 +9,7 @@ search_button.addEventListener("click", function() {submit(search_string)});
 
 function submit(search_string) {
 
-    let url=giphy_url + api_key + "&q=" + search_string.value + "&limit=20&offset=0&rating=R&lang=en";
+    let url=giphy_url + api_key + "&q=" + search_string.value + "&limit=30&offset=0&rating=R&lang=en";
     console.log(url)
     let result_url;
 

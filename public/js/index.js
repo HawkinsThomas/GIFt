@@ -44,6 +44,4 @@ function submit(search_string) {
             document.getElementById(column_id).innerHTML += `<img src=${result_url}>`;
         }
     });
-
-    
 }

@@ -3,7 +3,8 @@ let api_key="api_key=GxP3rAWWiabibTsL3i2Fj2R2g2u8DFQV";
 
 let search_button = document.getElementById("search_button");
 let search_string = document.getElementById("search_bar");
-let column_heights = [0,0,0,0,0]
+let column_heights = [0,0,0,0,0];
+let column_ids = [0,1,2,3,4];
 
 search_button.addEventListener("click", function() {submit(search_string)});
 
@@ -22,6 +23,12 @@ function submit(search_string) {
     let url=giphy_url + api_key + "&q=" + search_string.value + "&limit=150&offset=0&rating=R&lang=en";
     let result_url;
     let column_id = 0;
+    let results_columns = document.getElementsByClassName("result-column");
+
+    column_ids.forEach(function(results_column){
+        document.getElementById(results_column).innerHTML = '';
+    });
+    
 
     $.getJSON(url, function(result){
         for (let i=0; i<result.data.length; i++){

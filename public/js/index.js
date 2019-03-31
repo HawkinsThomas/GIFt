@@ -29,7 +29,6 @@ function submit(search_string) {
         document.getElementById(results_column).innerHTML = '';
     });
     
-
     $.getJSON(url, function(result){
         for (let i=0; i<result.data.length; i++){
             if (i >= 30){
@@ -39,7 +38,8 @@ function submit(search_string) {
                 column_id = column_id == 4 ? 0 : column_id + 1;
             }
             result_url = String(result.data[i].images.fixed_width.url);
-            result_img_height = parseInt(result.data[i].images.fixed_width.height);
+            let result_img_height = parseInt(result.data[i].images.fixed_width.height);
+            
             column_heights[column_id] += result_img_height;
             document.getElementById(column_id).innerHTML += `<img src=${result_url}>`;
         }

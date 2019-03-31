@@ -1,0 +1,19 @@
+{
+  "name": "gif_me",
+  "version": "1.0.0",
+  "description": "GIFt is a gif keyboard app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HawkinsThomas/GIF_ME.git"
+  },
+  "author": "Thomas Hawkins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HawkinsThomas/GIF_ME/issues"
+  },
+  "homepage": "https://github.com/HawkinsThomas/GIF_ME#readme"
+}

@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> GIF ME! </title>
+    <title> GIFt </title>
 
-    <!--Bootstrap CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <!-- Fonr Awesome. Popular icon set: https://fontawesome.com/v4.7.0/icons/ -->
     <link href="css/font-awesome.min.css" rel="stylesheet">
@@ -19,14 +18,51 @@ test change
   <body>
 
     <header>
-
     </header>
+    <main>
 
+      <div class="container mb-3">
+        <div class="col-md-4 offset-md-4">
+          <div class="container-fluid col-md-10 offset-md-1">
+            <img id="logo" src="img/GUFtlogo1.0.svg"/>          
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid">
+        <form>
+          <div class="form-row">
+            <div class="col-md-5 offset-md-3 col-sm-12 offset-sm-0">
+              <input type="seach" class="form-control" placeholder="Search for GIFs" id="search_bar">
+            </div>
+            <div class="offset-md-0 col-sm-1 offset-sm-5">
+              <button type="button" class="btn btn-primary" id="search_button">Search</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <div class="container-fluid offset-md-1 mt-3" id="results">
+        <div id="results_row" class="row">
+          <div id="0" class="col-md-2 result-column"></div>
+          <div id="1" class="col-md-2 result-column"></div>
+          <div id="2" class="col-md-2 result-column"></div>
+          <div id="3" class="col-md-2 result-column"></div>
+          <div id="4" class="col-md-2 result-column"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-1 offset-md-1 justify-content-center">
+          <img src="img/PoweredBy_200px-White_HorizLogo.png">
+        </div>
+      </div>
+
+    </main>
     <footer>
 
     </footer>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src='js/index.js'></script>
   </body>
-
-
 </html>

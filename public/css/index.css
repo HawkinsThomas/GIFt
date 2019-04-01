@@ -1,0 +1,25 @@
+html{
+    height:100%;
+}
+body{
+    height:90%;
+}
+main{
+    height: 100%;
+}
+#results{
+    height: 60%;
+    overflow: scroll;   
+}
+.result-column{
+    padding-right: 2px;
+    padding-left: 2px;
+}
+img{
+    width:100%;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.logo{
+    width:100px;
+}

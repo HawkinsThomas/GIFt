@@ -4,7 +4,8 @@
   "description": "GIFt is a gif keyboard app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server public -o"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/HawkinsThomas/GIF_ME/issues"
   },
-  "homepage": "https://github.com/HawkinsThomas/GIF_ME#readme"
+  "homepage": "https://github.com/HawkinsThomas/GIF_ME#readme",
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
 }

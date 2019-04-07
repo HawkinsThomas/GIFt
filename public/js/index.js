@@ -19,9 +19,38 @@ let get_shortest_column = (column_heights) => {
     return index
 }
 
+let loadImage = (url) => {
+    return new Promise((resolve, reject) => {
+        let image = new Image()
+
+        image.onload = function() {
+            resolve(image)
+        }
+
+        image.onerror = function() {
+            let message =
+                'Could not load image at ' + url
+            reject(image)
+        }
+        image.src = url
+    })
+}
+
+let addImage = (src) => {
+    let imgElement = document.createElement("img")
+    imgElement.src = src
+
+    let column_id = String(get_shortest_column(column_heights))
+    let img_column = document.getElementById(column_id)
+    img_column.appendChild(imgElement)
+
+    let img_height = imgElement.height
+    column_heights[column_id] += img_height
+}
+
 function submit(search_string) {
 
-    let url=giphy_url + api_key + "&q=" + search_string.value + "&limit=150&offset=0&rating=R&lang=en"
+    let url=giphy_url + api_key + "&q=" + search_string.value + "&limit=50&offset=0&rating=R&lang=en"
     let result_url;
     let column_id = 0;
 
@@ -30,13 +59,16 @@ function submit(search_string) {
     });
     
     $.getJSON(url, function(result){
+        let images = []
         result.data.map(result => {
-            column_id = get_shortest_column(column_heights)
-            console.log(column_id)
             result_url = String(result.images.fixed_width.url)
-            result_img_height = parseInt(result.images.fixed_width.height)
-            column_heights[column_id] += result_img_height
-            document.getElementById(String(column_id)).innerHTML += `<img src=${result_url}>`
+            images.push(loadImage(result_url))
         })
-    })
+            
+        Promise.all(images).then((images) => {
+            images.map((image) => {
+                addImage(image.src)
+            })
+        })      
+    })   
 }

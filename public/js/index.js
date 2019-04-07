@@ -24,6 +24,7 @@ let loadImage = (url) => {
         let image = new Image()
 
         image.onload = function() {
+            addImage(image.src)
             resolve(image)
         }
 
@@ -48,9 +49,8 @@ let addImage = (src) => {
 
 function submit(search_string) {
 
-    let url=giphy_url + api_key + "&q=" + search_string.value + "&limit=50&offset=0&rating=R&lang=en"
-    let result_url;
-    let column_id = 0;
+    let url=giphy_url + api_key + "&q=" + search_string.value + "&limit=200&offset=0&rating=R&lang=en"
+    let result_url
 
     column_ids.forEach(function(results_column){
         document.getElementById(results_column).innerHTML = ''
@@ -65,7 +65,9 @@ function submit(search_string) {
             
         Promise.all(images).then((images) => {
             images.map((image) => {
-                addImage(image.src)
+                //addImage(image.src)
+                //console.log("thomas")
+                {}
             })
         })      
     })   

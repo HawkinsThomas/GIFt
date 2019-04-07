@@ -43,9 +43,7 @@ let addImage = (src) => {
     let column_id = String(get_shortest_column(column_heights))
     let img_column = document.getElementById(column_id)
     img_column.appendChild(imgElement)
-
-    let img_height = imgElement.height
-    column_heights[column_id] += img_height
+    column_heights[column_id] += imgElement.height
 }
 
 function submit(search_string) {

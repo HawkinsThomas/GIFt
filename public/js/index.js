@@ -3,10 +3,16 @@ let api_key="api_key=GxP3rAWWiabibTsL3i2Fj2R2g2u8DFQV"
 
 let search_button = document.getElementById("search_button")
 let search_string = document.getElementById("search_bar")
+let search_form = document.getElementById("search_form")
 let column_heights = [0,0,0,0,0]
 let column_ids = [0,1,2,3,4]
 
 search_button.addEventListener("click", function() {submit(search_string)});
+
+search_form.addEventListener("submit", (event) => {
+    event.preventDefault()
+    submit(search_string)
+})
 
 let get_shortest_column = (column_heights) => {
     let index = column_heights.reduce((lowest, column_height, currentIndex) => {

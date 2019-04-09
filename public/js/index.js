@@ -57,18 +57,9 @@ function submit(search_string) {
     });
     
     $.getJSON(url, function(result){
-        let images = []
         result.data.map(result => {
             result_url = String(result.images.fixed_width.url)
-            images.push(loadImage(result_url))
-        })
-            
-        Promise.all(images).then((images) => {
-            images.map((image) => {
-                //addImage(image.src)
-                //console.log("thomas")
-                {}
-            })
-        })      
+            loadImage(result_url)
+        })    
     })   
 }

@@ -1,70 +1,66 @@
-let giphy_url="https://api.giphy.com/v1/gifs/search?"
-let api_key="api_key=GxP3rAWWiabibTsL3i2Fj2R2g2u8DFQV"
+'use strict';
 
-let search_button = document.getElementById("search_button")
-let search_string = document.getElementById("search_bar")
-let search_form = document.getElementById("search_form")
-let column_heights = [0,0,0,0,0]
-let column_ids = [0,1,2,3,4]
+const giphyUrl = 'https://api.giphy.com/v1/gifs/search?';
+const apiKey = 'api_key=GxP3rAWWiabibTsL3i2Fj2R2g2u8DFQV';
 
-search_button.addEventListener("click", function() {submit(search_string)});
+const searchButton = document.getElementById('search_button');
+const searchString = document.getElementById('search_bar');
+const searchForm = document.getElementById('search_form');
+const columnHeights = [0, 0, 0, 0, 0];
+const columnIds = [0, 1, 2, 3, 4];
 
-search_form.addEventListener("submit", (event) => {
-    event.preventDefault()
-    submit(search_string)
-})
+const getShortestColumn = () => {
+  const index = columnHeights.reduce((lowest, columnHeight, currentIndex) => {
+    if (columnHeight < columnHeights[lowest]) {
+      return currentIndex;
+    }
+    return lowest;
+  }, 0);
 
-let get_shortest_column = (column_heights) => {
-    let index = column_heights.reduce((lowest, column_height, currentIndex) => {
-        if (column_height < column_heights[lowest]){
-            lowest = currentIndex
-        }
-        return lowest
-    }, 0)
+  return index;
+};
 
-    return index
-}
+const addImage = (image) => {
+  const columnId = String(getShortestColumn(columnHeights));
+  const imgColumn = document.getElementById(columnId);
+  imgColumn.appendChild(image);
+  columnHeights[columnId] += image.height;
+};
 
-let loadImage = (url) => {
-    return new Promise((resolve, reject) => {
-        let image = new Image()
-        //let image = document.createElement("video")
+const loadImage = (url) => {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => {
+      resolve(image);
+    };
 
-        image.onload = function() {
-            addImage(image)
-            resolve(image)
-        }
+    image.onerror = () => {
+      const message = 'Could not load image at ' + url;
+      reject(message);
+    };
+    image.src = url;
+  });
+};
 
-        image.onerror = function() {
-            let message =
-                'Could not load image at ' + url
-            reject(image)
-        }
-        image.src = url
-    })
-}
+const submit = (search) => {
+  const url = (giphyUrl + apiKey + '&q=' + search.value + '&limit=50&offset=0&rating=R&lang=en');
+  columnIds.forEach((resultsColumn) => {
+    document.getElementById(resultsColumn).innerHTML = '';
+  });
 
-
-let addImage = (image) => {
-    let column_id = String(get_shortest_column(column_heights))
-    let img_column = document.getElementById(column_id)
-    img_column.appendChild(image)
-    column_heights[column_id] += image.height
-}
-
-let submit = (search_string) => {
-
-    let url=giphy_url + api_key + "&q=" + search_string.value + "&limit=20&offset=0&rating=R&lang=en"
-    let result_url
-
-    column_ids.forEach((results_column) => {
-        document.getElementById(results_column).innerHTML = ''
+  $.getJSON(url, (result) => {
+    result.data.forEach((imgageResult) => {
+      const resultUrl = String(imgageResult.images.fixed_width.url);
+      loadImage(resultUrl)
+        .then((resolvedValue) => {
+          addImage(resolvedValue);
+        });
     });
-    
-    $.getJSON(url, (result) => {
-        result.data.map( async (result) => {
-            result_url = String(result.images.fixed_width.url)
-            let image = await loadImage(result_url)
-        })    
-    })   
-}
+  });
+};
+
+searchButton.addEventListener('click', () => { submit(searchString); });
+searchForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  submit(searchString);
+});

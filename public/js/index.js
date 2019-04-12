@@ -28,9 +28,10 @@ let get_shortest_column = (column_heights) => {
 let loadImage = (url) => {
     return new Promise((resolve, reject) => {
         let image = new Image()
+        //let image = document.createElement("video")
 
         image.onload = function() {
-            addImage(image.src)
+            addImage(image)
             resolve(image)
         }
 
@@ -43,29 +44,27 @@ let loadImage = (url) => {
     })
 }
 
-let addImage = (src) => {
-    let imgElement = document.createElement("img")
-    imgElement.src = src
 
+let addImage = (image) => {
     let column_id = String(get_shortest_column(column_heights))
     let img_column = document.getElementById(column_id)
-    img_column.appendChild(imgElement)
-    column_heights[column_id] += imgElement.height
+    img_column.appendChild(image)
+    column_heights[column_id] += image.height
 }
 
-function submit(search_string) {
+let submit = (search_string) => {
 
-    let url=giphy_url + api_key + "&q=" + search_string.value + "&limit=200&offset=0&rating=R&lang=en"
+    let url=giphy_url + api_key + "&q=" + search_string.value + "&limit=20&offset=0&rating=R&lang=en"
     let result_url
 
-    column_ids.forEach(function(results_column){
+    column_ids.forEach((results_column) => {
         document.getElementById(results_column).innerHTML = ''
     });
     
-    $.getJSON(url, function(result){
-        result.data.map(result => {
+    $.getJSON(url, (result) => {
+        result.data.map( async (result) => {
             result_url = String(result.images.fixed_width.url)
-            loadImage(result_url)
+            let image = await loadImage(result_url)
         })    
     })   
 }

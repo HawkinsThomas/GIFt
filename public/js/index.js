@@ -6,7 +6,7 @@ const apiKey = 'api_key=GxP3rAWWiabibTsL3i2Fj2R2g2u8DFQV';
 const searchButton = document.getElementById('search_button');
 const searchString = document.getElementById('search_bar');
 const searchForm = document.getElementById('search_form');
-const columnHeights = [0, 0, 0, 0, 0];
+let columnHeights = [0, 0, 0, 0, 0];
 const columnIds = [0, 1, 2, 3, 4];
 
 const getShortestColumn = () => {
@@ -46,17 +46,20 @@ const submit = (search) => {
   const url = (giphyUrl + apiKey + '&q=' + search.value + '&limit=50&offset=0&rating=R&lang=en');
   columnIds.forEach((resultsColumn) => {
     document.getElementById(resultsColumn).innerHTML = '';
+    columnHeights = [0, 0, 0, 0, 0];
   });
 
-  $.getJSON(url, (result) => {
-    result.data.forEach((imgageResult) => {
-      const resultUrl = String(imgageResult.images.fixed_width.url);
-      loadImage(resultUrl)
-        .then((resolvedValue) => {
-          addImage(resolvedValue);
-        });
+  fetch(url)
+    .then(response => response.json())
+    .then((imageResult) => {
+      imageResult.data.forEach((result) => {
+        const resultUrl = String(result.images.fixed_width.url);
+        loadImage(resultUrl)
+          .then((resolvedValue) => {
+            addImage(resolvedValue);
+          });
+      });
     });
-  });
 };
 
 searchButton.addEventListener('click', () => { submit(searchString); });

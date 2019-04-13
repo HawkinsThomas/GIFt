@@ -55,8 +55,8 @@ const submit = (search) => {
       imageResult.data.forEach((result) => {
         const resultUrl = String(result.images.fixed_width.url);
         loadImage(resultUrl)
-          .then((resolvedValue) => {
-            addImage(resolvedValue);
+          .then((resolvedImage) => {
+            addImage(resolvedImage);
           });
       });
     });

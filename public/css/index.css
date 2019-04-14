@@ -23,3 +23,16 @@ img{
 .logo{
     width:100px;
 }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  background-color: #333;
+  width: 100%; 
+  padding-top: 5px;
+  float:bottom;
+}
+
+.footer a{
+  float: left;
+}

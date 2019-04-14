@@ -62,6 +62,21 @@ const submit = (search) => {
     });
 };
 
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("backtotop").style.display = "block";
+  } else {
+    document.getElementById("backtotop").style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
+window.onscroll = function() {scrollFunction()};
 searchButton.addEventListener('click', () => { submit(searchString); });
 searchForm.addEventListener('submit', (event) => {
   event.preventDefault();

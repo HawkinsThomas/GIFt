@@ -37,6 +37,13 @@ footer {
   float: left;
 }
 
+.btn {
+  margin-top: 2px;
+  margin-left: 1px;
+  margin-right: 1px;
+  width: 13%;
+}
+
 #backtotop {
   display: none;
   position: fixed;

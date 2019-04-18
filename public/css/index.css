@@ -7,10 +7,10 @@ body{
 main{
     height: 100%;
 }
-#results{
+/* #results{
     height: 60%;
     overflow: scroll;   
-}
+} */
 .result-column{
     padding-right: 2px;
     padding-left: 2px;
@@ -40,8 +40,8 @@ footer {
 #backtotop {
   display: none;
   position: fixed;
-  bottom: 50px;
-  right: 30px;
+  bottom: 60px;
+  right: 20px;
   z-index: 99;
   font-size: 18px;
   border: none;

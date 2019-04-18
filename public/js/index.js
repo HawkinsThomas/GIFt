@@ -62,6 +62,14 @@ const submit = (search) => {
     });
 };
 
+searchButton.addEventListener('click', () => { submit(searchString); });
+searchForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  submit(searchString);
+});
+
+window.onscroll = function() {scrollFunction()};
+
 function scrollFunction() {
   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
     document.getElementById("backtotop").style.display = "block";
@@ -74,11 +82,7 @@ function scrollFunction() {
 function topFunction() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
+
 }
 
-window.onscroll = function() {scrollFunction()};
-searchButton.addEventListener('click', () => { submit(searchString); });
-searchForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  submit(searchString);
-});
+

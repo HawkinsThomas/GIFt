@@ -1,9 +1,12 @@
 'use strict';
 
-const giphyUrl = 'https://api.giphy.com/v1/gifs/search?';
+const giphyUrl = 'https://api.giphy.com/v1/gifs/';
 const apiKey = 'api_key=GxP3rAWWiabibTsL3i2Fj2R2g2u8DFQV';
 
 const searchButton = document.getElementById('search_button');
+const randomButton = document.getElementById('random_button');
+const trendingButton = document.getElementById('trending_button');
+
 const searchString = document.getElementById('search_bar');
 const searchForm = document.getElementById('search_form');
 let columnHeights = [0, 0, 0, 0, 0];
@@ -42,13 +45,7 @@ const loadImage = (url) => {
   });
 };
 
-const submit = (search) => {
-  const url = (giphyUrl + apiKey + '&q=' + search.value + '&limit=50&offset=0&rating=R&lang=en');
-  columnIds.forEach((resultsColumn) => {
-    document.getElementById(resultsColumn).innerHTML = '';
-    columnHeights = [0, 0, 0, 0, 0];
-  });
-
+const fetchJson = (url) => {
   fetch(url)
     .then(response => response.json())
     .then((imageResult) => {
@@ -60,12 +57,54 @@ const submit = (search) => {
           });
       });
     });
+}
+
+const fetchRandom = (url) => {
+  fetch(url)
+    .then(response => response.json())
+    .then((imageResult) => {
+      const resultUrl = String(imageResult.data.images.fixed_width.url);
+      loadImage(resultUrl)
+        .then((resolvedImage) => {
+          addImage(resolvedImage);
+        });
+    });
+}
+
+const submitSearch = (search) => {
+  const url = (giphyUrl + 'search?' + apiKey + '&q=' + search.value + '&limit=50&offset=0&rating=R&lang=en');
+  columnIds.forEach((resultsColumn) => {
+    document.getElementById(resultsColumn).innerHTML = '';
+    columnHeights = [0, 0, 0, 0, 0];
+  });
+  fetchJson(url);
 };
 
-searchButton.addEventListener('click', () => { submit(searchString); });
+const submitRandom = () => {
+  const url = (giphyUrl  + 'random?' + apiKey + '&offset=0&rating=R&lang=en');
+  columnIds.forEach((resultsColumn) => {
+    document.getElementById(resultsColumn).innerHTML = '';
+    columnHeights = [0, 0, -1, 0, 0];
+  });
+  fetchRandom(url);
+};
+
+const submitTrending = () => {
+  const url = (giphyUrl  + 'trending?' + apiKey + '&limit=50&offset=0&rating=R&lang=en');
+  columnIds.forEach((resultsColumn) => {
+    document.getElementById(resultsColumn).innerHTML = '';
+    columnHeights = [0, 0, 0, 0, 0];
+  });
+  fetchJson(url);
+};
+
+searchButton.addEventListener('click', () => { submitSearch(searchString); });
+randomButton.addEventListener('click', () => { submitRandom(searchString); });
+trendingButton.addEventListener('click', () => { submitTrending(searchString); });
+
 searchForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  submit(searchString);
+  submitSearch(searchString);
 });
 
 window.onscroll = function() {scrollFunction()};

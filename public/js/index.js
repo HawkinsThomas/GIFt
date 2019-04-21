@@ -72,7 +72,7 @@ const fetchRandom = (url) => {
 }
 
 const submitSearch = (search) => {
-  const url = (giphyUrl + 'search?' + apiKey + '&q=' + search.value + '&limit=50&offset=0&rating=R&lang=en');
+  const url = (giphyUrl + 'search?' + apiKey + '&q=' + search.value + '&limit=150&offset=0&rating=R&lang=en');
   columnIds.forEach((resultsColumn) => {
     document.getElementById(resultsColumn).innerHTML = '';
     columnHeights = [0, 0, 0, 0, 0];
@@ -90,7 +90,7 @@ const submitRandom = () => {
 };
 
 const submitTrending = () => {
-  const url = (giphyUrl  + 'trending?' + apiKey + '&limit=50&offset=0&rating=R&lang=en');
+  const url = (giphyUrl  + 'trending?' + apiKey + '&limit=150&offset=0&rating=R&lang=en');
   columnIds.forEach((resultsColumn) => {
     document.getElementById(resultsColumn).innerHTML = '';
     columnHeights = [0, 0, 0, 0, 0];

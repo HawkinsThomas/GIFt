@@ -99,8 +99,8 @@ const submitTrending = () => {
 };
 
 searchButton.addEventListener('click', () => { submitSearch(searchString); });
-randomButton.addEventListener('click', () => { submitRandom(searchString); });
-trendingButton.addEventListener('click', () => { submitTrending(searchString); });
+randomButton.addEventListener('click', () => { submitRandom(); });
+trendingButton.addEventListener('click', () => { submitTrending(); });
 
 searchForm.addEventListener('submit', (event) => {
   event.preventDefault();

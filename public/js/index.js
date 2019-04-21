@@ -110,10 +110,26 @@ searchForm.addEventListener('submit', (event) => {
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+  let navbar = document.getElementById("gift-navbar");
+  /* let sticky = navbar.offsetTop ;
+
+  if (window.pageYOffset >= sticky) {
+    navbar.style.display = "block";
+    navbar.classList.add("sticky");
+  }
+  else {
+    navbar.style.removeProperty("display");
+    navbar.classList.remove("sticky");
+  } */
+
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
     document.getElementById("backtotop").style.display = "block";
+    navbar.style.display = "block";
+    navbar.classList.add("sticky");
   } else {
     document.getElementById("backtotop").style.display = "none";
+    navbar.style.removeProperty("display");
+    navbar.classList.remove("sticky");
   }
 }
 

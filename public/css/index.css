@@ -65,3 +65,20 @@ footer {
 #backtotop:hover {
   background-color: #555;
 }
+
+#navlogo {
+  width: 35px;
+}
+
+#gift-navbar {
+  display:none;
+}
+
+.sticky {
+  /* display: block !important; */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  background-color: gray;
+}

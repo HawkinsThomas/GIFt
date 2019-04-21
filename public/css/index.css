@@ -6,6 +6,7 @@ body{
 }
 main{
     height: 100%;
+    width: 100%;
 }
 /* #results{
     height: 60%;
@@ -14,6 +15,11 @@ main{
 .result-column{
     padding-right: 2px;
     padding-left: 2px;
+}
+
+#results_row{
+  padding-right:0;
+  margin-right:0;
 }
 img{
     width:100%;

@@ -73,11 +73,12 @@ footer {
 }
 
 #navlogo {
-  width: 35px;
+  width: 50px;
 }
 
 #gift-navbar {
   display:none;
+  padding-top: 8px;
 }
 
 .sticky {
@@ -86,5 +87,7 @@ footer {
   top: 0;
   width: 100%;
   z-index: 99;
-  background-color: gray;
+  height: 55px;
+  background-color: #cce3f0;
 }
+

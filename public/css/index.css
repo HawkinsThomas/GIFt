@@ -74,6 +74,7 @@ footer {
 
 #navlogo {
   width: 50px;
+  padding-right: 10px;
 }
 
 #gift-navbar {
@@ -91,3 +92,7 @@ footer {
   background-color: #cce3f0;
 }
 
+.navbtn{
+  width: 30%;
+  white-space: normal;
+}

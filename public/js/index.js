@@ -7,8 +7,17 @@ const searchButton = document.getElementById('search_button');
 const randomButton = document.getElementById('random_button');
 const trendingButton = document.getElementById('trending_button');
 
+const searchIcon = document.getElementById('nav_search_button');
+const randomIcon = document.getElementById('nav_random_button');
+const trendingIcon = document.getElementById('nav_trending_button');
+
 const searchString = document.getElementById('search_bar');
 const searchForm = document.getElementById('search_form');
+
+const searchString = document.getElementById('nav_search_bar');
+const searchForm = document.getElementById('nav_search_form');
+
+
 let columnHeights = [0, 0, 0, 0, 0];
 const columnIds = [0, 1, 2, 3, 4];
 

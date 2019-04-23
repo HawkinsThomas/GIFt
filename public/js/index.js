@@ -14,7 +14,8 @@ const trendingIcon = document.getElementById('nav_trending_button');
 const searchString = document.getElementById('search_bar');
 const searchForm = document.getElementById('search_form');
 
-
+const navSearchString = document.getElementById('nav_search_bar');
+const navSearchForm = document.getElementById('nav_search_form');
 
 
 let columnHeights = [0, 0, 0, 0, 0];
@@ -110,9 +111,18 @@ searchButton.addEventListener('click', () => { submitSearch(searchString); });
 randomButton.addEventListener('click', () => { submitRandom(); });
 trendingButton.addEventListener('click', () => { submitTrending(); });
 
+searchIcon.addEventListener('click', () => { submitSearch(searchString); });
+randomIcon.addEventListener('click', () => { submitRandom(); });
+trendingIcon.addEventListener('click', () => { submitTrending(); });
+
 searchForm.addEventListener('submit', (event) => {
   event.preventDefault();
   submitSearch(searchString);
+});
+
+navSearchForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  submitSearch(navSearchString);
 });
 
 window.onscroll = function() {scrollFunction()};

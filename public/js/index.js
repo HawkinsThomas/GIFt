@@ -107,6 +107,9 @@ const submitTrending = () => {
   fetchJson(url);
 };
 
+searchString.addEventListener('change',() => { navSearchString.value = searchString.value; });
+navSearchString.addEventListener('change',() => { searchString.value = navSearchString.value; });
+
 searchButton.addEventListener('click', () => { submitSearch(searchString); });
 randomButton.addEventListener('click', () => { submitRandom(); });
 trendingButton.addEventListener('click', () => { submitTrending(); });

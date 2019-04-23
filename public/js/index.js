@@ -111,7 +111,7 @@ searchButton.addEventListener('click', () => { submitSearch(searchString); });
 randomButton.addEventListener('click', () => { submitRandom(); });
 trendingButton.addEventListener('click', () => { submitTrending(); });
 
-searchIcon.addEventListener('click', () => { submitSearch(searchString); });
+searchIcon.addEventListener('click', () => { submitSearch(navSearchString); });
 randomIcon.addEventListener('click', () => { submitRandom(); });
 trendingIcon.addEventListener('click', () => { submitTrending(); });
 

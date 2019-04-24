@@ -48,10 +48,11 @@ footer {
 .btn {
   margin-top: 3px;
   margin-left: 1px;
-  margin-right: 1px;
+  margin-right: 8px;
   margin-bottom: 0px;
-  width: 13%;
+ 
 }
+
 
 #backtotop {
   display: none;

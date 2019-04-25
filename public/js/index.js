@@ -17,6 +17,14 @@ const searchForm = document.getElementById('search_form');
 const navSearchString = document.getElementById('nav_search_bar');
 const navSearchForm = document.getElementById('nav_search_form');
 
+const name = 'Thomas';
+const element = <h1>Hello, {name}</h1>;
+
+ReactDOM.render(
+  element,
+  document.getElementById('root');
+);
+
 
 let columnHeights = [0, 0, 0, 0, 0];
 const columnIds = [0, 1, 2, 3, 4];
@@ -132,16 +140,6 @@ window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
   let navbar = document.getElementById("gift-navbar");
-  /* let sticky = navbar.offsetTop ;
-
-  if (window.pageYOffset >= sticky) {
-    navbar.style.display = "block";
-    navbar.classList.add("sticky");
-  }
-  else {
-    navbar.style.removeProperty("display");
-    navbar.classList.remove("sticky");
-  } */
 
   if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
     document.getElementById("backtotop").style.display = "block";

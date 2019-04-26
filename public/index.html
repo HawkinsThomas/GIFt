@@ -1,95 +1,17 @@
+<!-- sourced from https://raw.githubusercontent.com/reactjs/reactjs.org/master/static/html/single-file-example.html -->
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> GIFt </title>
+<html>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="css/index.css">
-  </head>
-  <body>
-    
-    <header>
-    </header>
-    <main>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>React Starter</title>
+</head>
 
-      <div id='root'></div> 
-      
-      <div class="container mb-3">
-        <div class="col-sm-6 offset-sm-3 col-md-4 offset-md-4">
-          <div class="container-fluid col-6 text-center col-sm-6 col-md-6 offset-md-3 ">
-            <img id="logo" src="img/GUFtlogo1.0.svg" alt="gift-logo"/>          
-          </div>
-        </div>
-      </div>
-
-      <div class="container-fluid">
-        <form id="search_form">
-          <div class="form-row">
-            <div class=" col-12 col-md-6 offset-md-3 col-sm-6 offset-sm-3">
-              <input type="search" class="form-control" placeholder="Search for GIFs" id="search_bar">
-            </div>
-          </div>
-          <div class="form-row justify-content-center col-12 col-sm-12 col-md-12 col-lg-12  ">
-            <button type="button" class="btn btn-success" id="search_button"><i class="fas fa-search"></i> Search</button>
-            <button type="button" class="btn btn-primary" id="random_button"><i class="fas fa-random"></i> Random</button>
-            <button type="button" class="btn btn-warning" id="trending_button"><i class="fas fa-chart-line"></i> Trending</button>
-          </div>
-        </form>
-      </div>
-      
-      <div id="gift-navbar" class="container-fluid centerer">
-        <div class="container-fluid">
-          <div class="row" style="height:50px">
-            <div class="col-lg-1 col-md-1 col-sm-4 col-4">
-              <img id="navlogo" src="img/GUFtlogo1.0.svg" alt="nav gift logo"/>
-            </div>
-            <form id="nav_search_form" class="col-6">
-            <!-- <div id="nav_search_form" class="col-5"> -->
-             <!-- <div class="col-5"> -->
-               <input type="search" class="form-control" placeholder="Search for GIFs" id="nav_search_bar">
-      
-             <!-- </div> -->
-            </form>
-            <div class="col-lg-4 col-md-4 col-sm-12">
-              <button type="button" class="btn btn-success btn-sm navbtn" id="nav_search_button"><i class="fas fa-search"></i> </button>
-              <button type="button" class="btn btn-primary btn-sm navbtn" id="nav_random_button"><i class="fas fa-random"></i> </button>
-              <button type="button" class="btn btn-warning btn-sm navbtn" id="nav_trending_button"><i class="fas fa-chart-line"></i> </button>
-            </div>
-          
-          </div>
-        </div>
-      </div>
-      
-      <div id="results_row" class="row container-fluid offset-0 mt-1">
-        <div id="0" class="col-md-2 result-column"></div>
-        <div id="1" class="col-md-3 result-column"></div>
-        <div id="2" class="col-md-2 result-column"></div>
-        <div id="3" class="col-md-3 result-column"></div>
-        <div id="4" class="col-md-2 result-column"></div>
-      </div>
-      
-
-      <button onclick="topFunction()" id="backtotop" title="Go to top"><i class="fas fa-arrow-up"></i></button>
-
-    </main>
-
-    <footer class="footer fixed-bottom">
-      <div class="row container-fluid justify-content-center">
-        <div class="col-3 col-sm-2 col-md-2 col-lg-1">
-          <img id="giphy" src="img/PoweredBy_200px-White_HorizLogo.png" alt="Giphy logo">
-        </div>
-          <div class="copyright text-light">
-            <p>© 2019 - Present</p>
-          </div>
-        </div>
-    </footer>
-  
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src='js/index.js'></script>
-  </body>
-</html>
+<body>
+  <div id="root"></div>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <script src="../dist/bundle.js"></script>
+</body>

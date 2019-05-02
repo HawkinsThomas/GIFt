@@ -37,8 +37,8 @@ function SearchForm(props){
         </div>
       </div>
       <div class="form-row justify-content-center col-12 col-sm-12 col-md-12 col-lg-12  ">
-        <MenuButton desc='Search' onClick={()=> {alert('click');}} id='search_button' className='btn btn-warning' iconClass='fas fa-search'/>
-        <MenuButton desc='Random' onClick={()=> {alert('click');}} id='random_button' className='btn btn-warning' iconClass='fas fa-random'/>
+        <MenuButton desc='Search' onClick={()=> {alert('click');}} id='search_button' className='btn btn-success' iconClass='fas fa-search'/>
+        <MenuButton desc='Random' onClick={()=> {alert('click');}} id='random_button' className='btn btn-primary' iconClass='fas fa-random'/>
         <MenuButton desc='Trending' onClick={()=> {alert('click');}} id='trending_button' className='btn btn-warning' iconClass='fas fa-chart-line'/>
       </div>
     </form>

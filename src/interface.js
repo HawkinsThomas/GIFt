@@ -3,7 +3,6 @@ import {hot} from 'react-hot-loader';
 import './App.css';
 import './css/bootstrap.min.css';
 import './css/index.css';
-//import './css/font-awesome.min.css';
 import img from '../public/img/GIFtlogo1.0@3x.png'
 
 

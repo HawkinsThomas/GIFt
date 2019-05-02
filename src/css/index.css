@@ -8,10 +8,7 @@ main{
     height: 100%;
     width: 100%;
 }
-/* #results{
-    height: 60%;
-    overflow: scroll;   
-} */
+
 .result-column{
     padding-right: 2px;
     padding-left: 2px;

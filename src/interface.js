@@ -69,6 +69,44 @@ function Navbar(props) {
   );
 }
 
+class ResultImage extends Component {
+
+  componentDidMount() {
+    const height = document.getElementById(this.props.id).height;
+    this.props.updateHeight(height, this.props.columnIndex);
+  };
+  
+  render() {
+    return(
+      <img src={this.props.image.src} id={this.props.imgKey} key={this.props.imgKey} alt='result'/>
+    );
+  };
+}
+
+class ResultColumn extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      columnId: 'column-' + this.props.columnId,
+      columnWidth: 'col-md-' + this.props.columnWidth + ' result-column',
+    }
+  };
+
+  render() {
+    return(
+      <div key={this.props.columnId} id={this.state.columnId} className={'col-md-' + this.props.columnWidth + ' result-column'}>
+        {this.props.images.map((image, index) => {
+          const imgKey = this.props.columnId + '-' + index;
+          return(
+            <ResultImage image={image} id={imgKey} key={imgKey} imgKey={imgKey} alt='result' updateHeight={this.props.updateHeight} columnIndex={this.props.columnId} columnId={this.state.columnId}/>
+          )
+        })}
+      </div>
+    );
+  };
+}
+
 class Results extends Component {
 
   constructor(props){
@@ -78,30 +116,23 @@ class Results extends Component {
     }
   }
 
-  renderColumn(columnId, columnWidth, images) {
-    return(
-      <div key={columnId} id={columnId} className={'col-md-' + columnWidth + ' result-column'}>
-        {images.map((image, index) => {
-          const imgKey = columnId + '-' + index;
-          return(
-            <img src={image.src} id={imgKey} key={imgKey} alt='result'/>
-          )
-        })}
-      </div>
-    );
-  }
-
   render() {
     return(
-      <div id="results_row" className="row container-fluid offset-1 mt-1">
-      {this.props.columnWidths.map((column, index) => {
-        return(
-          this.renderColumn(index, this.props.columnWidths[index], this.props.columnImages[index])
-        );
-      })}
+      <div id="results_row" className="row container-fluid offset-0 mt-1">
+        {this.props.columnWidths.map((column, index) => {
+          return(
+            <ResultColumn 
+              key={index} 
+              columnId={index} 
+              columnWidth={this.props.columnWidths[index]} 
+              images={this.props.columnImages[index]} 
+              updateHeight={this.props.updateHeight}
+            />
+          );
+        })}
       </div>
     ); 
-  }
+  };
 }
 
 class Interface extends Component {
@@ -111,8 +142,8 @@ class Interface extends Component {
     this.state = {
       searchValue: '',
       isNavBarVisible: false,
-      columnWidths: [2,2,2,2,2],
-      columnHeights: [0,0,0,0,0],
+      columnWidths: [2,3,2,3,2],
+      columnHeights: [0,0,-1,0,0],
       columnImages: [[],[],[],[],[]],
       shortestColumn: 0,
       giphyUrl: 'https://api.giphy.com/v1/gifs/',
@@ -152,27 +183,26 @@ class Interface extends Component {
     this.setState({shortestColumn: index});
   };
 
-  updateHeight(image, columnId) {
-    const newHeight = this.state.columnHeights[columnId] + image.height;
+  updateHeight(height, columnId) {
+    const newHeight = this.state.columnHeights[columnId] + height;
     const newColumnHeights = this.state.columnHeights.slice();
     newColumnHeights.splice(columnId, 1, newHeight);
     this.setState({
       columnHeights: newColumnHeights,
-    })
-  }
+    });
+    this.getShortestColumn();
+  };
 
   addImage(image) {
-    this.getShortestColumn();
     const columnId = this.state.shortestColumn;
     const newColumnImages = this.state.columnImages.slice();
     const newColumn = newColumnImages[columnId];
-    newColumn.push(image)
+    newColumn.push(image);
     newColumnImages.splice(columnId, 1, newColumn);
     
     this.setState({
       columnImages: newColumnImages,
     });
-    this.updateHeight(image, columnId);
   };
   
   loadImage(url) {
@@ -202,7 +232,7 @@ class Interface extends Component {
             });
         });
       });
-  }
+  };
 
   fetchRandom(url) {
     fetch(url)
@@ -214,27 +244,29 @@ class Interface extends Component {
             this.addImage(resolvedImage);
           });
       });
-  }
+  };
 
   onSubmit(event) {
     event.preventDefault();
-    this.submitSearch(this.state.searchValue);
-  }
+    //this.submitSearch(this.state.searchValue);
+  };
 
-  submitSearch(search) {
-    const url = (this.state.giphyUrl + 'search?' + this.state.apiKey + '&q=' + search.value + '&limit=100&offset=0&rating=R&lang=en');
+  submitSearch() {
+    const url = (this.state.giphyUrl + 'search?' + this.state.apiKey + '&q=' + this.state.searchValue + '&limit=100&offset=0&rating=R&lang=en');
     this.setState({
-      columnHeights: [0, 0, 0, 0, 0],
       columnImages: [[],[],[],[],[]],
+      columnWidths: [2, 3, 2, 3, 2],
+      columnHeights:[0, 0, -1, 0, 0],
     });
     this.fetchJson(url);
   };
-  
   submitRandom() {
     const url = (this.state.giphyUrl  + 'random?' + this.state.apiKey + '&offset=0&rating=R&lang=en');
+    console.log(url)
     this.setState({
-      columnHeights: [0, 0, -1, 0, 0],
       columnImages: [[],[],[],[],[]],
+      columnWidths: [2, 1, 6, 1, 2],
+      columnHeights:[0, 0, -1, 0, 0],
     });
     this.fetchRandom(url);
   };
@@ -242,8 +274,9 @@ class Interface extends Component {
   submitTrending() {
     const url = (this.state.giphyUrl  + 'trending?' + this.state.apiKey + '&limit=100&offset=0&rating=R&lang=en');
     this.setState({
-      columnHeights: [0, 0, 0, 0, 0],
       columnImages: [[],[],[],[],[]],
+      columnWidths: [2, 3, 2, 3, 2],
+      columnHeights:[0, 0, -1, 0, 0],
     });
     this.fetchJson(url);
   };
@@ -277,7 +310,7 @@ class Interface extends Component {
         />
       </div>
     );
-  }
+  };
 }
 
 export default hot(module) (Interface);

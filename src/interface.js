@@ -190,7 +190,6 @@ class Interface extends Component {
     this.setState({
       columnHeights: newColumnHeights,
     });
-    this.getShortestColumn();
   };
 
   addImage(image) {
@@ -203,6 +202,7 @@ class Interface extends Component {
     this.setState({
       columnImages: newColumnImages,
     });
+    this.getShortestColumn();
   };
   
   loadImage(url) {
@@ -252,13 +252,13 @@ class Interface extends Component {
   };
 
   submitSearch() {
-    const url = (this.state.giphyUrl + 'search?' + this.state.apiKey + '&q=' + this.state.searchValue + '&limit=100&offset=0&rating=R&lang=en');
+    const url = (this.state.giphyUrl + 'search?' + this.state.apiKey + '&q=' + this.state.searchValue + '&limit=50&offset=0&rating=R&lang=en');
     this.setState({
       columnImages: [[],[],[],[],[]],
       columnWidths: [2, 3, 2, 3, 2],
       columnHeights:[0, 0, -1, 0, 0],
-    });
-    this.fetchJson(url);
+    }, this.fetchJson(url));
+    
   };
   submitRandom() {
     const url = (this.state.giphyUrl  + 'random?' + this.state.apiKey + '&offset=0&rating=R&lang=en');
@@ -267,18 +267,19 @@ class Interface extends Component {
       columnImages: [[],[],[],[],[]],
       columnWidths: [2, 1, 6, 1, 2],
       columnHeights:[0, 0, -1, 0, 0],
-    });
-    this.fetchRandom(url);
+      shortestColumn: 2,
+    }, this.fetchRandom(url));
+
   };
   
   submitTrending() {
-    const url = (this.state.giphyUrl  + 'trending?' + this.state.apiKey + '&limit=100&offset=0&rating=R&lang=en');
+    const url = (this.state.giphyUrl  + 'trending?' + this.state.apiKey + '&limit=50&offset=0&rating=R&lang=en');
     this.setState({
       columnImages: [[],[],[],[],[]],
       columnWidths: [2, 3, 2, 3, 2],
       columnHeights:[0, 0, -1, 0, 0],
-    });
-    this.fetchJson(url);
+    }, this.fetchJson(url));
+    
   };
 
   render(){

@@ -325,7 +325,16 @@ class Interface extends Component {
           columnImages={this.state.columnImages}
           updateHeight={this.updateHeight}
         />
-        <footer> </footer>
+        <footer> <div class="footer fixed-bottom">
+      <div class="row container-fluid justify-content-center">
+        <div class="col-3 col-sm-2 col-md-2 col-lg-1">
+          <img id="giphy" src="img/PoweredBy_200px-White_HorizLogo.png" alt="Giphy logo"/> 
+          </div>
+          <div class="copyright text-light">
+            <p>© 2019 - Present</p>
+          </div>
+        </div>
+    </div> </footer>
       </div>
     );
   };

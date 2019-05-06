@@ -161,8 +161,9 @@ class Interface extends Component {
       columnHeights: [0,0,-1,0,0],
       columnImages: [[],[],[],[],[]],
       shortestColumn: 0,
+      batchNumber: 0,
       giphyUrl: 'https://api.giphy.com/v1/gifs/',
-      apiKey: 'api_key=GxP3rAWWiabibTsL3i2Fj2R2g2u8DFQV',
+      apiKey: 'api_key=GxP3rAWWiabibTsL3i2Fj2R2g2u8DFQV', //technically you should never have this in git. 
     }
     this.handleChange = this.handleChange.bind(this);
     this.navBarVisible = this.navBarVisible.bind(this);
@@ -220,11 +221,15 @@ class Interface extends Component {
     this.getShortestColumn();
   };
   
-  loadImage(url) {
+  loadImage(url,batchNumber) {
     return new Promise((resolve, reject) => {
       const image = new Image();
       image.onload = () => {
-        resolve(image);
+        resolve({
+            image: image,
+            batchNumber: batchNumber,
+          }
+          );
       };
   
       image.onerror = () => {
@@ -241,8 +246,10 @@ class Interface extends Component {
       .then((imageResult) => {
         imageResult.data.forEach((result) => {
           const resultUrl = String(result.images.fixed_width.url);
-          this.loadImage(resultUrl)
-            .then((resolvedImage) => {
+          this.setState(
+            {batchNumber: this.state.batchNumber + 1},
+            this.loadImage(resultUrl, this.state.batchNumber))
+            .image.then((resolvedImage) => {
               this.addImage(resolvedImage);
             });
         });

@@ -32,7 +32,7 @@ function Logo(props) {
 function SearchForm(props) {
   return(
     <div>
-      <form id='search_form' onSubmit={props.onSubmit}>
+      <form id='search_form' onSubmit={props.submitSearch}>
         <div className='form-row'>
           <div className=' col-12 col-md-6 offset-md-3 col-sm-6 offset-sm-3'>
             <input type='search' className='form-control' placeholder='Search for GIFs' id='search_bar' value={props.value} onChange={props.handleChange}/>
@@ -44,19 +44,18 @@ function SearchForm(props) {
           <MenuButton desc='Trending' onClick={props.submitTrending} id='trending_button' className='btn btn-warning' iconClass='fas fa-chart-line'/> 
         </div>
       </form>
-      <button onClick={props.showHide}>Show/Hide</button>
     </div>
   );
 }
 
 function Navbar(props) {
   return(
-    <div id={props.id} className='container-fluid centerer'>
+    <div id={props.id} className='container-fluid centerer sticky'>
       <div className='row' id='navBarRow'>
         <div className='col-lg-1 col-md-1 col-sm-4 col-4'>
           <img id='navlogo' src={navImg} alt='nav gift logo'/>
         </div>
-        <form id='nav_search_form' className='col-6'onSubmit={props.onSubmit}>
+        <form id='nav_search_form' className='col-6'onSubmit={props.submitSearch}>
           <input type='search' className='form-control' placeholder='Search for GIFs' id='nav_search_bar' value={props.value} onChange={props.handleChange}></input>
         </form>
         <div className='col-lg-4 col-md-4 col-sm-12'>
@@ -67,6 +66,21 @@ function Navbar(props) {
       </div>
     </div>
   );
+}
+
+function Footer(props) {
+  return(
+    <footer className="footer fixed-bottom">
+      <div className="row container-fluid justify-content-center">
+        <div className="col-3 col-sm-2 col-md-2 col-lg-1">
+          <img id="giphy" src="img/PoweredBy_200px-White_HorizLogo.png" alt="Giphy logo"/>
+        </div>
+          <div className="copyright text-dark bold">
+            <p>© 2019 - Present</p>
+          </div>
+        </div>
+    </footer>
+  )
 }
 
 class ResultImage extends Component {
@@ -146,8 +160,9 @@ class Interface extends Component {
       columnHeights: [0,0,-1,0,0],
       columnImages: [[],[],[],[],[]],
       shortestColumn: 0,
+      batchNumber: 0,
       giphyUrl: 'https://api.giphy.com/v1/gifs/',
-      apiKey: 'api_key=GxP3rAWWiabibTsL3i2Fj2R2g2u8DFQV',
+      apiKey: 'api_key=GxP3rAWWiabibTsL3i2Fj2R2g2u8DFQV', //technically you should never have this in git. 
     }
     this.handleChange = this.handleChange.bind(this);
     this.navBarVisible = this.navBarVisible.bind(this);
@@ -159,16 +174,25 @@ class Interface extends Component {
     this.loadImage = this.loadImage.bind(this);
     this.fetchJson = this.fetchJson.bind(this);
     this.fetchRandom = this.fetchRandom.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.updateHeight = this.updateHeight.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   };
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll() {
+    (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ?
+      this.navBarVisible(true) : this.navBarVisible(false)
+  }
 
   handleChange(event) {
     this.setState({searchValue: event.target.value});
   };
 
-  navBarVisible() {
-    this.setState({isNavBarVisible: !this.state.isNavBarVisible});
+  navBarVisible(isVisible) {
+    this.setState({isNavBarVisible: isVisible});
   };
 
   getShortestColumn() {
@@ -192,7 +216,11 @@ class Interface extends Component {
     });
   };
 
-  addImage(image) {
+  addImage(image, batchNumber) {
+    if (this.state.batchNumber !== batchNumber){
+      console.log('old batch')
+      return;
+    }
     const columnId = this.state.shortestColumn;
     const newColumnImages = this.state.columnImages.slice();
     const newColumn = newColumnImages[columnId];
@@ -205,11 +233,14 @@ class Interface extends Component {
     this.getShortestColumn();
   };
   
-  loadImage(url) {
+  loadImage(url, batchNumber) {
     return new Promise((resolve, reject) => {
       const image = new Image();
       image.onload = () => {
-        resolve(image);
+        resolve({
+            image: image,
+            batchNumber: batchNumber,
+          });
       };
   
       image.onerror = () => {
@@ -226,10 +257,11 @@ class Interface extends Component {
       .then((imageResult) => {
         imageResult.data.forEach((result) => {
           const resultUrl = String(result.images.fixed_width.url);
-          this.loadImage(resultUrl)
-            .then((resolvedImage) => {
-              this.addImage(resolvedImage);
-            });
+            this.loadImage(resultUrl, this.state.batchNumber)
+              .then((resolvedImage) => {
+
+                this.addImage(resolvedImage.image, resolvedImage.batchNumber);
+              })
         });
       });
   };
@@ -239,24 +271,24 @@ class Interface extends Component {
       .then(response => response.json())
       .then((imageResult) => {
         const resultUrl = String(imageResult.data.images.fixed_width.url);
-        this.loadImage(resultUrl)
+        this.loadImage(resultUrl, this.state.batchNumber)
           .then((resolvedImage) => {
-            this.addImage(resolvedImage);
+            console.log(resolvedImage)
+            this.addImage(resolvedImage.image, resolvedImage.batchNumber);
           });
       });
   };
 
-  onSubmit(event) {
-    event.preventDefault();
-    //this.submitSearch(this.state.searchValue);
-  };
+  
 
-  submitSearch() {
+  submitSearch(event) {
+    event.preventDefault();
     const url = (this.state.giphyUrl + 'search?' + this.state.apiKey + '&q=' + this.state.searchValue + '&limit=50&offset=0&rating=R&lang=en');
     this.setState({
       columnImages: [[],[],[],[],[]],
       columnWidths: [2, 3, 2, 3, 2],
       columnHeights:[0, 0, -1, 0, 0],
+      batchNumber: this.state.batchNumber + 1,
     }, this.fetchJson(url));
     
   };
@@ -268,6 +300,7 @@ class Interface extends Component {
       columnWidths: [2, 1, 6, 1, 2],
       columnHeights:[0, 0, -1, 0, 0],
       shortestColumn: 2,
+      batchNumber: this.state.batchNumber + 1,
     }, this.fetchRandom(url));
 
   };
@@ -292,23 +325,25 @@ class Interface extends Component {
           submitRandom={this.submitRandom}
           submitSearch={this.submitSearch}
           submitTrending={this.submitTrending}
-          onSubmit={this.onSubmit}
+          onSubmit={this.submitSearch}
         />
         <Logo src={img} alt='App Logo'></Logo>
         <SearchForm 
           value={this.state.searchValue}
           handleChange={this.handleChange}
-          showHide={this.navBarVisible}
           submitRandom={this.submitRandom}
           submitSearch={this.submitSearch}
           submitTrending={this.submitTrending}
-          onSubmit={this.onSubmit}
+          onSubmit={this.submitSearch}
         />
         <Results 
           columnWidths={this.state.columnWidths}
           columnImages={this.state.columnImages}
           updateHeight={this.updateHeight}
         />
+        <Footer> 
+          
+        </Footer>
       </div>
     );
   };

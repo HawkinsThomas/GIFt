@@ -32,7 +32,7 @@ function Logo(props) {
 function SearchForm(props) {
   return(
     <div>
-      <form id='search_form' onSubmit={props.onSubmit}>
+      <form id='search_form' onSubmit={props.submitSearch}>
         <div className='form-row'>
           <div className=' col-12 col-md-6 offset-md-3 col-sm-6 offset-sm-3'>
             <input type='search' className='form-control' placeholder='Search for GIFs' id='search_bar' value={props.value} onChange={props.handleChange}/>
@@ -44,19 +44,18 @@ function SearchForm(props) {
           <MenuButton desc='Trending' onClick={props.submitTrending} id='trending_button' className='btn btn-warning' iconClass='fas fa-chart-line'/> 
         </div>
       </form>
-      <button onClick={props.showHide}>Show/Hide</button>
     </div>
   );
 }
 
 function Navbar(props) {
   return(
-    <div id={props.id} className='container-fluid centerer'>
+    <div id={props.id} className='container-fluid centerer sticky'>
       <div className='row' id='navBarRow'>
         <div className='col-lg-1 col-md-1 col-sm-4 col-4'>
           <img id='navlogo' src={navImg} alt='nav gift logo'/>
         </div>
-        <form id='nav_search_form' className='col-6'onSubmit={props.onSubmit}>
+        <form id='nav_search_form' className='col-6'onSubmit={props.submitSearch}>
           <input type='search' className='form-control' placeholder='Search for GIFs' id='nav_search_bar' value={props.value} onChange={props.handleChange}></input>
         </form>
         <div className='col-lg-4 col-md-4 col-sm-12'>
@@ -175,16 +174,25 @@ class Interface extends Component {
     this.loadImage = this.loadImage.bind(this);
     this.fetchJson = this.fetchJson.bind(this);
     this.fetchRandom = this.fetchRandom.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.updateHeight = this.updateHeight.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   };
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll() {
+    (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ?
+      this.navBarVisible(true) : this.navBarVisible(false)
+  }
 
   handleChange(event) {
     this.setState({searchValue: event.target.value});
   };
 
-  navBarVisible() {
-    this.setState({isNavBarVisible: !this.state.isNavBarVisible});
+  navBarVisible(isVisible) {
+    this.setState({isNavBarVisible: isVisible});
   };
 
   getShortestColumn() {
@@ -271,12 +279,10 @@ class Interface extends Component {
       });
   };
 
-  onSubmit(event) {
-    event.preventDefault();
-    //this.submitSearch(this.state.searchValue);
-  };
+  
 
-  submitSearch() {
+  submitSearch(event) {
+    event.preventDefault();
     const url = (this.state.giphyUrl + 'search?' + this.state.apiKey + '&q=' + this.state.searchValue + '&limit=50&offset=0&rating=R&lang=en');
     this.setState({
       columnImages: [[],[],[],[],[]],
@@ -319,17 +325,16 @@ class Interface extends Component {
           submitRandom={this.submitRandom}
           submitSearch={this.submitSearch}
           submitTrending={this.submitTrending}
-          onSubmit={this.onSubmit}
+          onSubmit={this.submitSearch}
         />
         <Logo src={img} alt='App Logo'></Logo>
         <SearchForm 
           value={this.state.searchValue}
           handleChange={this.handleChange}
-          showHide={this.navBarVisible}
           submitRandom={this.submitRandom}
           submitSearch={this.submitSearch}
           submitTrending={this.submitTrending}
-          onSubmit={this.onSubmit}
+          onSubmit={this.submitSearch}
         />
         <Results 
           columnWidths={this.state.columnWidths}

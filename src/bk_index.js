@@ -141,7 +141,7 @@ window.onscroll = function() {scrollFunction()};
 function scrollFunction() {
   let navbar = document.getElementById("gift-navbar");
 
-  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+  if (document.body.scrollTop > 100) {
     document.getElementById("backtotop").style.display = "block";
     navbar.style.display = "block";
     navbar.classList.add("sticky");

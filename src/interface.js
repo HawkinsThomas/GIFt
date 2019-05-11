@@ -71,12 +71,12 @@ function Navbar(props) {
 
 function Footer(props) {
   return(
-    <footer class="footer fixed-bottom">
-      <div class="row container-fluid justify-content-center">
-        <div class="col-3 col-sm-2 col-md-2 col-lg-1">
+    <footer className="footer fixed-bottom">
+      <div className="row container-fluid justify-content-center">
+        <div className="col-3 col-sm-2 col-md-2 col-lg-1">
           <img id="giphy" src="img/PoweredBy_200px-White_HorizLogo.png" alt="Giphy logo"/>
         </div>
-          <div class="copyright text-dark bold">
+          <div className="copyright text-dark bold">
             <p>© 2019 - Present</p>
           </div>
         </div>
@@ -208,7 +208,11 @@ class Interface extends Component {
     });
   };
 
-  addImage(image) {
+  addImage(image, batchNumber) {
+    if (this.state.batchNumber !== batchNumber){
+      console.log('old batch')
+      return;
+    }
     const columnId = this.state.shortestColumn;
     const newColumnImages = this.state.columnImages.slice();
     const newColumn = newColumnImages[columnId];
@@ -221,15 +225,14 @@ class Interface extends Component {
     this.getShortestColumn();
   };
   
-  loadImage(url,batchNumber) {
+  loadImage(url, batchNumber) {
     return new Promise((resolve, reject) => {
       const image = new Image();
       image.onload = () => {
         resolve({
             image: image,
             batchNumber: batchNumber,
-          }
-          );
+          });
       };
   
       image.onerror = () => {
@@ -246,12 +249,11 @@ class Interface extends Component {
       .then((imageResult) => {
         imageResult.data.forEach((result) => {
           const resultUrl = String(result.images.fixed_width.url);
-          this.setState(
-            {batchNumber: this.state.batchNumber + 1},
-            this.loadImage(resultUrl, this.state.batchNumber))
-            .image.then((resolvedImage) => {
-              this.addImage(resolvedImage);
-            });
+            this.loadImage(resultUrl, this.state.batchNumber)
+              .then((resolvedImage) => {
+
+                this.addImage(resolvedImage.image, resolvedImage.batchNumber);
+              })
         });
       });
   };
@@ -261,9 +263,10 @@ class Interface extends Component {
       .then(response => response.json())
       .then((imageResult) => {
         const resultUrl = String(imageResult.data.images.fixed_width.url);
-        this.loadImage(resultUrl)
+        this.loadImage(resultUrl, this.state.batchNumber)
           .then((resolvedImage) => {
-            this.addImage(resolvedImage);
+            console.log(resolvedImage)
+            this.addImage(resolvedImage.image, resolvedImage.batchNumber);
           });
       });
   };
@@ -279,6 +282,7 @@ class Interface extends Component {
       columnImages: [[],[],[],[],[]],
       columnWidths: [2, 3, 2, 3, 2],
       columnHeights:[0, 0, -1, 0, 0],
+      batchNumber: this.state.batchNumber + 1,
     }, this.fetchJson(url));
     
   };
@@ -290,6 +294,7 @@ class Interface extends Component {
       columnWidths: [2, 1, 6, 1, 2],
       columnHeights:[0, 0, -1, 0, 0],
       shortestColumn: 2,
+      batchNumber: this.state.batchNumber + 1,
     }, this.fetchRandom(url));
 
   };
